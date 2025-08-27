@@ -1,0 +1,33 @@
+name: Tests
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4.1.7
+
+      - name: Flutter action
+        uses: subosito/flutter-action@v2.14.0
+
+      - name: Restore Packages
+        run: flutter pub get
+
+      - name: Insure Formatting
+        run: dart format
+
+      - name: Analyze project source
+        run: flutter analyze
+
+      - name: Update Goldens
+        run: flutter test --update-goldens
+
+      - name: Run tests
+        run: flutter test --coverage
