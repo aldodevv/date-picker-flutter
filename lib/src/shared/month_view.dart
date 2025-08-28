@@ -1,3 +1,4 @@
+import 'package:date_picker_plus/src/style/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
@@ -150,22 +151,31 @@ class MonthView extends StatelessWidget {
       if (isCurrentMonth) {
         //
         //
-        style = currentDateTextStyle;
-        decoration = currentDateDecoration;
+        style = currentDateTextStyle.copyWith(
+          fontWeight: FontWeight.w600,
+          fontSize: 16.0,
+        );
+        decoration = currentDateDecoration.copyWith(
+          color: ColorsApp.brown10,
+          borderRadius: const BorderRadius.all(Radius.circular(6)),
+          border: BoxBorder.all(color: ColorsApp.brown50, width: 1),
+        );
       }
       if (isSelected) {
         //
         //
-        style = selectedCellTextStyle;
-        decoration = selectedCellDecoration;
+        style = selectedCellTextStyle.copyWith(color: Colors.white);
+        decoration = selectedCellDecoration.copyWith(color: ColorsApp.brown50);
       }
 
       if (isDisabled) {
-        style = disabledCellsTextStyle;
+        style = disabledCellsTextStyle.copyWith(
+            color: ColorsApp.dark40.withAlpha(70));
         decoration = disabledCellsDecoration;
       }
 
       Widget monthWidget = Container(
+        margin: const EdgeInsets.symmetric(horizontal: 2.0),
         decoration: decoration,
         child: Center(
           child: Text(

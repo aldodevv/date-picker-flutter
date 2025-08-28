@@ -1,3 +1,4 @@
+import 'package:date_picker_plus/src/style/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../shared/device_orientation_builder.dart';
@@ -456,7 +457,14 @@ class _DaysPickerState extends State<DaysPicker> {
               previousPageSemanticLabel: widget.previousPageSemanticLabel,
               nextPageSemanticLabel: widget.nextPageSemanticLabel,
             ),
-            const SizedBox(height: 10),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+              child: Divider(
+                height: 1,
+                color: ColorsApp.dark30.withAlpha(40),
+              ),
+            ),
             Expanded(
               child: PageView.builder(
                 scrollDirection: Axis.horizontal,

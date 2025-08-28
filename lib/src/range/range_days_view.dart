@@ -1,5 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
+import 'dart:math';
+
+import 'package:date_picker_plus/src/style/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart' show DateFormat;
@@ -307,7 +310,13 @@ class RangeDaysView extends StatelessWidget {
         }
 
         if (isDisabled) {
-          style = disabledCellsTextStyle;
+          style = isWeekend
+              ? disabledCellsTextStyle.copyWith(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16.0,
+                  color: ColorsApp.darkRed60.withAlpha(80),
+                )
+              : disabledCellsTextStyle;
           decoration = disabledCellsDecoration;
         }
 
@@ -316,29 +325,52 @@ class RangeDaysView extends StatelessWidget {
           decoration = currentDateDecoration;
         }
 
-        Widget dayWidget = Center(
-          child: Text(
-            localizations.formatDecimal(day),
-            style: style,
+        EdgeInsets getDayMargin() {
+          if (isSingleCellSelected || isCurrent) {
+            return const EdgeInsets.symmetric(horizontal: 7.0, vertical: 2.0);
+          } else if (isStartDate) {
+            return const EdgeInsets.fromLTRB(7.0, 2.0, 0.0, 2.0);
+          } else if (isEndDate) {
+            return const EdgeInsets.fromLTRB(0.0, 2.0, 7.0, 2.0);
+          }
+          return const EdgeInsets.symmetric(vertical: 2.0);
+        }
+
+        Widget dayWidget = Container(
+          height: 32,
+          width: 32,
+          decoration: BoxDecoration(
+            color: isStartDate || isEndDate
+                ? ColorsApp.brown50
+                : isCurrent
+                    ? ColorsApp.brown10
+                    : null,
+            border: isStartDate || isEndDate
+                ? Border.all(color: ColorsApp.brown50, width: 1)
+                : null,
+            borderRadius: BorderRadius.circular(6.0),
+          ),
+          child: Center(
+            child: Text(localizations.formatDecimal(day), style: style),
           ),
         );
 
         dayWidget = Container(
+          height: 32.0,
+          width: 32.0,
           clipBehavior: Clip.hardEdge,
           decoration: decoration,
           child: dayWidget,
         );
 
         // Add padding for selected cells like in daysPicker
+
         if (isSingleCellSelected ||
             isStartDate ||
             isEndDate ||
             isCurrent ||
             isRangeSelected) {
-          dayWidget = Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
-            child: dayWidget,
-          );
+          dayWidget = dayWidget;
         }
 
         //! disable for background color range picker
