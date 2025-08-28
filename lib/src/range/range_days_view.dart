@@ -310,13 +310,7 @@ class RangeDaysView extends StatelessWidget {
         }
 
         if (isDisabled) {
-          style = isWeekend
-              ? disabledCellsTextStyle.copyWith(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 16.0,
-                  color: ColorsApp.darkRed60.withAlpha(80),
-                )
-              : disabledCellsTextStyle;
+          style = disabledCellsTextStyle;
           decoration = disabledCellsDecoration;
         }
 
@@ -325,20 +319,9 @@ class RangeDaysView extends StatelessWidget {
           decoration = currentDateDecoration;
         }
 
-        EdgeInsets getDayMargin() {
-          if (isSingleCellSelected || isCurrent) {
-            return const EdgeInsets.symmetric(horizontal: 7.0, vertical: 2.0);
-          } else if (isStartDate) {
-            return const EdgeInsets.fromLTRB(7.0, 2.0, 0.0, 2.0);
-          } else if (isEndDate) {
-            return const EdgeInsets.fromLTRB(0.0, 2.0, 7.0, 2.0);
-          }
-          return const EdgeInsets.symmetric(vertical: 2.0);
-        }
-
         Widget dayWidget = Container(
-          height: 32,
-          width: 32,
+          width: 32.0,
+          height: 32.0,
           decoration: BoxDecoration(
             color: isStartDate || isEndDate
                 ? ColorsApp.brown50
@@ -364,13 +347,26 @@ class RangeDaysView extends StatelessWidget {
         );
 
         // Add padding for selected cells like in daysPicker
+        EdgeInsets getDayPadding() {
+          if (isSingleCellSelected || isCurrent) {
+            return const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0);
+          } else if (isStartDate) {
+            return const EdgeInsets.fromLTRB(6.0, 2.0, 0.0, 2.0);
+          } else if (isEndDate) {
+            return const EdgeInsets.fromLTRB(0.0, 2.0, 6.0, 2.0);
+          }
+          return const EdgeInsets.symmetric(vertical: 2.0);
+        }
 
         if (isSingleCellSelected ||
             isStartDate ||
             isEndDate ||
             isCurrent ||
             isRangeSelected) {
-          dayWidget = dayWidget;
+          dayWidget = Padding(
+            padding: getDayPadding(),
+            child: dayWidget,
+          );
         }
 
         //! disable for background color range picker
