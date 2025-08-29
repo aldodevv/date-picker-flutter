@@ -72,8 +72,8 @@ class DatePickerQtoken extends StatefulWidget {
     this.selectedCellTextStyle,
     this.selectedCellDecoration,
     this.leadingDateTextStyle,
-    this.slidersColor = ColorsApp.brown50,
-    this.slidersSize = 20,
+    this.slidersColor = ColorsApp.dark10,
+    this.slidersSize = 16,
     this.highlightColor = ColorsApp.brown10,
     this.splashColor = ColorsApp.brown10,
     this.splashRadius = 24.0,
@@ -315,7 +315,13 @@ class _DatePickerQtokenState extends State<DatePickerQtoken> {
 
     final styleLeadingDate = widget.leadingDateTextStyle?.copyWith(
       fontSize: 18.0,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w700,
+      color: ColorsApp.brown50,
+    );
+
+    final styleLeadingYear = widget.leadingDateTextStyle?.copyWith(
+      fontSize: 18.0,
+      fontWeight: FontWeight.w600,
       color: ColorsApp.dark80,
     );
 
@@ -446,7 +452,7 @@ class _DatePickerQtokenState extends State<DatePickerQtoken> {
             selectedCellTextStyle: styleSelectedCell,
             slidersColor: widget.slidersColor,
             slidersSize: widget.slidersSize,
-            leadingDateTextStyle: styleLeadingDate,
+            leadingDateTextStyle: styleLeadingYear,
             splashColor: widget.splashColor,
             highlightColor: widget.highlightColor,
             splashRadius: widget.splashRadius,

@@ -75,8 +75,8 @@ class RangeDatePickerQtoken extends StatefulWidget {
     this.singleSelectedCellTextStyle,
     this.singleSelectedCellDecoration,
     this.leadingDateTextStyle,
-    this.slidersColor = ColorsApp.brown50,
-    this.slidersSize = 20,
+    this.slidersColor = ColorsApp.dark10,
+    this.slidersSize = 16,
     this.highlightColor = ColorsApp.brown10,
     this.splashColor = ColorsApp.brown10,
     this.splashRadius = 24.0,
@@ -340,30 +340,34 @@ class _RangeDatePickerQtokenState extends State<RangeDatePickerQtoken> {
     final styleDisabledCells = widget.disabledCellsTextStyle?.copyWith(
       fontWeight: FontWeight.w400,
       fontSize: 16.0,
-      color: ColorsApp.dark30.withAlpha(30),
+      color: ColorsApp.dark40.withAlpha(70),
     );
 
     final styleCurrentDateDecoration = widget.currentDateDecoration?.copyWith(
+      color: ColorsApp.brown10,
       borderRadius: const BorderRadius.all(Radius.circular(6)),
       border: BoxBorder.all(color: ColorsApp.brown50, width: 1),
     );
 
     final styleSelectedCellsDecoration =
         widget.selectedCellsDecoration?.copyWith(
-      color: ColorsApp.brown10,
-      borderRadius: const BorderRadius.all(Radius.circular(6)),
-      border: BoxBorder.all(color: ColorsApp.brown50, width: 1),
+      color: ColorsApp.brown10.withAlpha(80),
     );
 
     final styleSelectedCells = widget.selectedCellsTextStyle?.copyWith(
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w400,
       fontSize: 16.0,
-      color: ColorsApp.dark80,
     );
 
     final styleLeadingDate = widget.leadingDateTextStyle?.copyWith(
       fontSize: 18.0,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w700,
+      color: ColorsApp.brown50,
+    );
+
+    final styleLeadingYear = widget.leadingDateTextStyle?.copyWith(
+      fontSize: 18.0,
+      fontWeight: FontWeight.w600,
       color: ColorsApp.dark80,
     );
 
@@ -378,6 +382,7 @@ class _RangeDatePickerQtokenState extends State<RangeDatePickerQtoken> {
       fontSize: 16.0,
       color: ColorsApp.dark80,
     );
+
     final styleSingleSelectedCellTextStyle =
         widget.singleSelectedCellTextStyle?.copyWith(
       fontWeight: FontWeight.w500,
@@ -526,7 +531,7 @@ class _RangeDatePickerQtokenState extends State<RangeDatePickerQtoken> {
             selectedCellTextStyle: styleSingleSelectedCellTextStyle,
             slidersColor: widget.slidersColor,
             slidersSize: widget.slidersSize,
-            leadingDateTextStyle: styleLeadingDate,
+            leadingDateTextStyle: styleLeadingYear,
             splashColor: widget.splashColor,
             highlightColor: widget.highlightColor,
             splashRadius: widget.splashRadius,

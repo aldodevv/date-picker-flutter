@@ -1,5 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
+import 'package:date_picker_plus/src/style/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart' show DateFormat;
@@ -248,7 +249,13 @@ class DaysView extends StatelessWidget {
         }
 
         if (isDisabled) {
-          style = disabledCellsTextStyle;
+          style = isWeekend
+              ? disabledCellsTextStyle.copyWith(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16.0,
+                  color: ColorsApp.darkRed60.withAlpha(80),
+                )
+              : disabledCellsTextStyle;
           decoration = disabledCellsDecoration;
         }
 
@@ -256,6 +263,7 @@ class DaysView extends StatelessWidget {
           style = disabledCellsTextStyle;
           decoration = currentDateDecoration;
         }
+
         Widget dayWidget = Container(
           decoration: decoration,
           child: Center(
