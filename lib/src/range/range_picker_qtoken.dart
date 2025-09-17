@@ -343,6 +343,12 @@ class _RangeDatePickerQtokenState extends State<RangeDatePickerQtoken> {
       color: ColorsApp.dark40.withAlpha(70),
     );
 
+    final styleDisabledWeekendCells = widget.disabledCellsTextStyle?.copyWith(
+      fontWeight: FontWeight.w400,
+      fontSize: 16.0,
+      color: ColorsApp.darkRed60.withAlpha(80),
+    );
+
     final styleCurrentDateDecoration = widget.currentDateDecoration?.copyWith(
       color: ColorsApp.brown10,
       borderRadius: const BorderRadius.all(Radius.circular(6)),
@@ -396,6 +402,71 @@ class _RangeDatePickerQtokenState extends State<RangeDatePickerQtoken> {
       borderRadius: const BorderRadius.all(Radius.circular(6)),
     );
 
+    final monthViewCurrentDateTextStyle = widget.currentDateTextStyle?.copyWith(
+      fontWeight: FontWeight.w600,
+      fontSize: 16.0,
+    );
+
+    final monthViewDateDecoration = widget.currentDateDecoration?.copyWith(
+      color: ColorsApp.brown10,
+      borderRadius: const BorderRadius.all(Radius.circular(6)),
+      border: BoxBorder.all(color: ColorsApp.brown50, width: 1),
+    );
+
+    final monthViewSelectedCellTextStyle =
+        widget.singleSelectedCellTextStyle?.copyWith(color: Colors.white);
+    final monthViewSelectedCellDecoration =
+        widget.singleSelectedCellDecoration?.copyWith(color: ColorsApp.brown50);
+
+    final monthViewDisabledCellsTextStyle =
+        widget.disabledCellsTextStyle?.copyWith(
+      color: ColorsApp.dark40.withAlpha(70),
+    );
+
+    final yearViewCurrentDateTextStyle = widget.currentDateTextStyle?.copyWith(
+      fontWeight: FontWeight.w600,
+      fontSize: 16.0,
+    );
+
+    final yearViewCurrentDateDecoration =
+        widget.currentDateDecoration?.copyWith(
+      color: ColorsApp.brown10,
+      borderRadius: const BorderRadius.all(Radius.circular(6)),
+      border: BoxBorder.all(color: ColorsApp.brown50, width: 1),
+    );
+
+    final yearViewSelectedCellTextStyle =
+        widget.singleSelectedCellTextStyle?.copyWith(color: Colors.white);
+
+    final yearViewSelectedCellDecoration =
+        widget.singleSelectedCellDecoration?.copyWith(color: ColorsApp.brown50);
+
+    final yearViewDisabledCellsTextStyle =
+        widget.disabledCellsTextStyle?.copyWith(
+      color: ColorsApp.dark40.withAlpha(70),
+    );
+
+    final startDateContainerDecoration = BoxDecoration(
+      color: ColorsApp.brown50,
+      border: Border.all(color: ColorsApp.brown50, width: 1),
+      borderRadius: BorderRadius.circular(6.0),
+    );
+
+    final endDateContainerDecoration = BoxDecoration(
+      color: ColorsApp.brown50,
+      border: Border.all(color: ColorsApp.brown50, width: 1),
+      borderRadius: BorderRadius.circular(6.0),
+    );
+
+    final currentDateContainerDecoration = BoxDecoration(
+      color: ColorsApp.brown10,
+      borderRadius: BorderRadius.circular(6.0),
+    );
+
+    final enabledCellsContainerDecoration = BoxDecoration(
+      borderRadius: BorderRadius.circular(6.0),
+    );
+
     switch (_pickerType!) {
       case PickerType.days:
         return Padding(
@@ -429,6 +500,11 @@ class _RangeDatePickerQtokenState extends State<RangeDatePickerQtoken> {
             previousPageSemanticLabel: widget.previousPageSemanticLabel,
             nextPageSemanticLabel: widget.nextPageSemanticLabel,
             weekendTextStyle: styleWeekend,
+            disabledWeekendTextStyle: styleDisabledWeekendCells,
+            startDateDecoration: startDateContainerDecoration,
+            endDateDecoration: endDateContainerDecoration,
+            currentDateContainerDecoration: currentDateContainerDecoration,
+            enabledCellsContainerDecoration: enabledCellsContainerDecoration,
             onLeadingDateTap: () {
               setState(() {
                 _pickerType = PickerType.months;
@@ -467,6 +543,7 @@ class _RangeDatePickerQtokenState extends State<RangeDatePickerQtoken> {
         return Padding(
           padding: widget.padding,
           child: MonthPicker(
+            isWithDivider: true,
             centerLeadingDate: widget.centerLeadingDate,
             initialDate: _diplayedDate,
             selectedDate: _monthPickerSelection,
@@ -474,14 +551,14 @@ class _RangeDatePickerQtokenState extends State<RangeDatePickerQtoken> {
             minDate: DateUtils.dateOnly(widget.minDate),
             currentDate:
                 DateUtils.dateOnly(widget.currentDate ?? DateTime.now()),
-            currentDateDecoration: styleCurrentDateDecoration,
-            currentDateTextStyle: styleCurrentDate,
+            currentDateDecoration: monthViewDateDecoration,
+            currentDateTextStyle: monthViewCurrentDateTextStyle,
             disabledCellsDecoration: widget.disabledCellsDecoration,
-            disabledCellsTextStyle: styleDisabledCells,
+            disabledCellsTextStyle: monthViewDisabledCellsTextStyle,
             enabledCellsDecoration: widget.enabledCellsDecoration,
             enabledCellsTextStyle: styleEnabledCells,
-            selectedCellDecoration: styleSingleSelectedCellDecoration,
-            selectedCellTextStyle: styleSingleSelectedCellTextStyle,
+            selectedCellDecoration: monthViewSelectedCellDecoration,
+            selectedCellTextStyle: monthViewSelectedCellTextStyle,
             slidersColor: widget.slidersColor,
             slidersSize: widget.slidersSize,
             leadingDateTextStyle: styleLeadingDate,
@@ -514,6 +591,7 @@ class _RangeDatePickerQtokenState extends State<RangeDatePickerQtoken> {
         return Padding(
           padding: widget.padding,
           child: YearsPicker(
+            isWithDivider: true,
             centerLeadingDate: widget.centerLeadingDate,
             selectedDate: _yearPickerSelection,
             initialDate: _diplayedDate,
@@ -521,14 +599,14 @@ class _RangeDatePickerQtokenState extends State<RangeDatePickerQtoken> {
             minDate: DateUtils.dateOnly(widget.minDate),
             currentDate:
                 DateUtils.dateOnly(widget.currentDate ?? DateTime.now()),
-            currentDateDecoration: styleCurrentDateDecoration,
-            currentDateTextStyle: styleCurrentDate,
+            currentDateDecoration: yearViewCurrentDateDecoration,
+            currentDateTextStyle: yearViewCurrentDateTextStyle,
             disabledCellsDecoration: widget.disabledCellsDecoration,
-            disabledCellsTextStyle: styleDisabledCells,
+            disabledCellsTextStyle: yearViewDisabledCellsTextStyle,
             enabledCellsDecoration: widget.enabledCellsDecoration,
             enabledCellsTextStyle: styleEnabledCells,
-            selectedCellDecoration: styleSingleSelectedCellDecoration,
-            selectedCellTextStyle: styleSingleSelectedCellTextStyle,
+            selectedCellDecoration: yearViewSelectedCellDecoration,
+            selectedCellTextStyle: yearViewSelectedCellTextStyle,
             slidersColor: widget.slidersColor,
             slidersSize: widget.slidersSize,
             leadingDateTextStyle: styleLeadingYear,

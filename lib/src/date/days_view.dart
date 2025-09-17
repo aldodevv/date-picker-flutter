@@ -1,6 +1,5 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
-import 'package:date_picker_plus/src/style/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart' show DateFormat;
@@ -39,6 +38,7 @@ class DaysView extends StatelessWidget {
     this.splashRadius,
     this.disabledDayPredicate,
     this.weekendTextStyle,
+    this.disabledWeekendTextStyle,
   }) {
     assert(!minDate.isAfter(maxDate), "minDate can't be after maxDate");
 
@@ -133,7 +133,8 @@ class DaysView extends StatelessWidget {
   /// The text style for weekend cells.
   final TextStyle? weekendTextStyle;
 
-  /// The text style for weekend cells.
+  /// The text style for disabled weekend cells.
+  final TextStyle? disabledWeekendTextStyle;
 
   /// Builds widgets showing abbreviated days of week. The first widget in the
   /// returned list corresponds to the first day of week for the current locale.
@@ -249,12 +250,8 @@ class DaysView extends StatelessWidget {
         }
 
         if (isDisabled) {
-          style = isWeekend
-              ? disabledCellsTextStyle.copyWith(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 16.0,
-                  color: ColorsApp.darkRed60.withAlpha(80),
-                )
+          style = isWeekend && disabledWeekendTextStyle != null
+              ? disabledWeekendTextStyle!
               : disabledCellsTextStyle;
           decoration = disabledCellsDecoration;
         }

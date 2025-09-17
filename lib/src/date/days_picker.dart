@@ -75,7 +75,8 @@ class DaysPicker extends StatefulWidget {
       this.previousPageSemanticLabel = 'Previous Day',
       this.nextPageSemanticLabel = 'Next Day',
       this.disabledDayPredicate,
-      this.weekendTextStyle}) {
+      this.weekendTextStyle,
+      this.disabledWeekendTextStyle}) {
     assert(!minDate.isAfter(maxDate), "minDate can't be after maxDate");
     assert(
       () {
@@ -242,6 +243,9 @@ class DaysPicker extends StatefulWidget {
 
   /// A predicate function used to determine if a given day should be selectable.
   final TextStyle? weekendTextStyle;
+
+  /// The text style for disabled weekend cells.
+  final TextStyle? disabledWeekendTextStyle;
 
   @override
   State<DaysPicker> createState() => _DaysPickerState();
@@ -506,6 +510,7 @@ class _DaysPickerState extends State<DaysPicker> {
                     splashRadius: widget.splashRadius,
                     disabledDayPredicate: widget.disabledDayPredicate,
                     weekendTextStyle: widget.weekendTextStyle,
+                    disabledWeekendTextStyle: widget.disabledWeekendTextStyle,
                     onChanged: (value) {
                       setState(() {
                         _selectedDate = value;

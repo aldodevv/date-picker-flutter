@@ -149,28 +149,16 @@ class MonthView extends StatelessWidget {
       TextStyle style = enabledCellsTextStyle;
 
       if (isCurrentMonth) {
-        //
-        //
-        style = currentDateTextStyle.copyWith(
-          fontWeight: FontWeight.w600,
-          fontSize: 16.0,
-        );
-        decoration = currentDateDecoration.copyWith(
-          color: ColorsApp.brown10,
-          borderRadius: const BorderRadius.all(Radius.circular(6)),
-          border: BoxBorder.all(color: ColorsApp.brown50, width: 1),
-        );
+        style = currentDateTextStyle;
+        decoration = currentDateDecoration;
       }
       if (isSelected) {
-        //
-        //
-        style = selectedCellTextStyle.copyWith(color: Colors.white);
-        decoration = selectedCellDecoration.copyWith(color: ColorsApp.brown50);
+        style = selectedCellTextStyle;
+        decoration = selectedCellDecoration;
       }
 
       if (isDisabled) {
-        style = disabledCellsTextStyle.copyWith(
-            color: ColorsApp.dark40.withAlpha(70));
+        style = disabledCellsTextStyle;
         decoration = disabledCellsDecoration;
       }
 

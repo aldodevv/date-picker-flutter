@@ -40,6 +40,11 @@ class RangeDaysPicker extends StatefulWidget {
     this.previousPageSemanticLabel = 'Previous Day',
     this.nextPageSemanticLabel = 'Next Day',
     this.weekendTextStyle,
+    this.disabledWeekendTextStyle,
+    this.startDateDecoration,
+    this.endDateDecoration,
+    this.currentDateContainerDecoration,
+    this.enabledCellsContainerDecoration,
   }) {
     assert(!minDate.isAfter(maxDate), "minDate can't be after maxDate");
 
@@ -217,6 +222,21 @@ class RangeDaysPicker extends StatefulWidget {
   final String? nextPageSemanticLabel;
 
   final TextStyle? weekendTextStyle;
+
+  /// The text style for disabled weekend cells.
+  final TextStyle? disabledWeekendTextStyle;
+
+  /// The decoration for start date container.
+  final BoxDecoration? startDateDecoration;
+
+  /// The decoration for end date container.
+  final BoxDecoration? endDateDecoration;
+
+  /// The decoration for current date container.
+  final BoxDecoration? currentDateContainerDecoration;
+
+  /// The decoration for enabled cells container.
+  final BoxDecoration? enabledCellsContainerDecoration;
 
   @override
   State<RangeDaysPicker> createState() => __RangeDaysPickerState();
@@ -494,6 +514,13 @@ class __RangeDaysPickerState extends State<RangeDaysPicker> {
                     splashColor: splashColor,
                     splashRadius: widget.splashRadius,
                     weekendTextStyle: widget.weekendTextStyle,
+                    disabledWeekendTextStyle: widget.disabledWeekendTextStyle,
+                    startDateDecoration: widget.startDateDecoration,
+                    endDateDecoration: widget.endDateDecoration,
+                    currentDateContainerDecoration:
+                        widget.currentDateContainerDecoration,
+                    enabledCellsContainerDecoration:
+                        widget.enabledCellsContainerDecoration,
                     onEndDateChanged: (value) =>
                         widget.onEndDateChanged?.call(value),
                     onStartDateChanged: (value) =>

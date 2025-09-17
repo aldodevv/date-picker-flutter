@@ -46,33 +46,33 @@ class MonthPicker extends StatefulWidget {
   ///
   /// For each of these [DateTime] parameters, only
   /// their year & month are considered. Their time & day fields are ignored.
-  MonthPicker({
-    super.key,
-    required this.minDate,
-    required this.maxDate,
-    this.initialDate,
-    this.currentDate,
-    this.selectedDate,
-    this.enabledCellsTextStyle,
-    this.enabledCellsDecoration = const BoxDecoration(),
-    this.disabledCellsTextStyle,
-    this.disabledCellsDecoration = const BoxDecoration(),
-    this.currentDateTextStyle,
-    this.currentDateDecoration,
-    this.selectedCellTextStyle,
-    this.selectedCellDecoration,
-    this.onLeadingDateTap,
-    this.onDateSelected,
-    this.leadingDateTextStyle,
-    this.slidersColor,
-    this.slidersSize,
-    this.highlightColor,
-    this.splashColor,
-    this.splashRadius,
-    this.centerLeadingDate = false,
-    this.previousPageSemanticLabel = 'Previous Month',
-    this.nextPageSemanticLabel = 'Next Month',
-  }) {
+  MonthPicker(
+      {super.key,
+      required this.minDate,
+      required this.maxDate,
+      this.initialDate,
+      this.currentDate,
+      this.selectedDate,
+      this.enabledCellsTextStyle,
+      this.enabledCellsDecoration = const BoxDecoration(),
+      this.disabledCellsTextStyle,
+      this.disabledCellsDecoration = const BoxDecoration(),
+      this.currentDateTextStyle,
+      this.currentDateDecoration,
+      this.selectedCellTextStyle,
+      this.selectedCellDecoration,
+      this.onLeadingDateTap,
+      this.onDateSelected,
+      this.leadingDateTextStyle,
+      this.slidersColor,
+      this.slidersSize,
+      this.highlightColor,
+      this.splashColor,
+      this.splashRadius,
+      this.centerLeadingDate = false,
+      this.previousPageSemanticLabel = 'Previous Month',
+      this.nextPageSemanticLabel = 'Next Month',
+      this.isWithDivider = false}) {
     assert(!minDate.isAfter(maxDate), "minDate can't be after maxDate");
 
     assert(
@@ -226,6 +226,8 @@ class MonthPicker extends StatefulWidget {
 
   /// Semantic label for button to go to the next page.
   final String? nextPageSemanticLabel;
+
+  final bool isWithDivider;
 
   @override
   State<MonthPicker> createState() => _MonthPickerState();
@@ -418,14 +420,16 @@ class _MonthPickerState extends State<MonthPicker> {
                 );
               },
             ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-              child: Divider(
-                height: 1,
-                color: ColorsApp.dark30.withAlpha(40),
-              ),
-            ),
+            widget.isWithDivider
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 6.0),
+                    child: Divider(
+                      height: 1,
+                      color: ColorsApp.dark30.withAlpha(40),
+                    ),
+                  )
+                : const SizedBox(height: 10),
             Expanded(
               child: PageView.builder(
                 scrollDirection: Axis.horizontal,

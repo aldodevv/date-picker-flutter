@@ -1,8 +1,5 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
-import 'dart:math';
-
-import 'package:date_picker_plus/src/style/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart' show DateFormat;
@@ -42,7 +39,13 @@ class RangeDaysView extends StatelessWidget {
       required this.highlightColor,
       required this.splashColor,
       required this.splashRadius,
-      this.weekendTextStyle}) {
+      this.weekendTextStyle,
+      this.disabledWeekendTextStyle,
+      this.startDateDecoration,
+      this.endDateDecoration,
+      this.currentDateContainerDecoration,
+      this.enabledCellsContainerDecoration,
+      this.isQtokenRangePicker = false}) {
     assert(!minDate.isAfter(maxDate), "minDate can't be after maxDate");
 
     assert(() {
@@ -162,6 +165,23 @@ class RangeDaysView extends StatelessWidget {
 
   /// The text style of the weekend days.
   final TextStyle? weekendTextStyle;
+
+  /// The text style for disabled weekend cells.
+  final TextStyle? disabledWeekendTextStyle;
+
+  /// The decoration for start date container.
+  final BoxDecoration? startDateDecoration;
+
+  /// The decoration for end date container.
+  final BoxDecoration? endDateDecoration;
+
+  /// The decoration for current date container.
+  final BoxDecoration? currentDateContainerDecoration;
+
+  /// The decoration for enabled cells container.
+  final BoxDecoration? enabledCellsContainerDecoration;
+
+  final bool isQtokenRangePicker;
 
   /// Builds widgets showing abbreviated days of week. The first widget in the
   /// returned list corresponds to the first day of week for the current locale.
@@ -310,7 +330,9 @@ class RangeDaysView extends StatelessWidget {
         }
 
         if (isDisabled) {
-          style = disabledCellsTextStyle;
+          style = isWeekend && disabledWeekendTextStyle != null
+              ? disabledWeekendTextStyle!
+              : disabledCellsTextStyle;
           decoration = disabledCellsDecoration;
         }
 
@@ -319,20 +341,25 @@ class RangeDaysView extends StatelessWidget {
           decoration = currentDateDecoration;
         }
 
+        EdgeInsets getDayPadding() {
+          if (isSingleCellSelected || isCurrent) {
+            return const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0);
+          } else if (isStartDate) {
+            return const EdgeInsets.fromLTRB(6.0, 2.0, 0.0, 2.0);
+          } else if (isEndDate) {
+            return const EdgeInsets.fromLTRB(0.0, 2.0, 6.0, 2.0);
+          }
+          return const EdgeInsets.symmetric(vertical: 2.0);
+        }
+
         Widget dayWidget = Container(
           width: 32.0,
           height: 32.0,
-          decoration: BoxDecoration(
-            color: isStartDate || isEndDate
-                ? ColorsApp.brown50
-                : isCurrent
-                    ? ColorsApp.brown10
-                    : null,
-            border: isStartDate || isEndDate
-                ? Border.all(color: ColorsApp.brown50, width: 1)
-                : null,
-            borderRadius: BorderRadius.circular(6.0),
-          ),
+          decoration: isStartDate || isEndDate
+              ? (isStartDate ? startDateDecoration : endDateDecoration)
+              : isCurrent
+                  ? currentDateContainerDecoration
+                  : enabledCellsContainerDecoration,
           child: Center(
             child: Text(localizations.formatDecimal(day), style: style),
           ),
@@ -347,24 +374,13 @@ class RangeDaysView extends StatelessWidget {
         );
 
         // Add padding for selected cells like in daysPicker
-        EdgeInsets getDayPadding() {
-          if (isSingleCellSelected || isCurrent) {
-            return const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0);
-          } else if (isStartDate) {
-            return const EdgeInsets.fromLTRB(6.0, 2.0, 0.0, 2.0);
-          } else if (isEndDate) {
-            return const EdgeInsets.fromLTRB(0.0, 2.0, 6.0, 2.0);
-          }
-          return const EdgeInsets.symmetric(vertical: 2.0);
-        }
-
         if (isSingleCellSelected ||
             isStartDate ||
             isEndDate ||
             isCurrent ||
             isRangeSelected) {
           dayWidget = Padding(
-            padding: getDayPadding(),
+            padding: isQtokenRangePicker ? getDayPadding() : EdgeInsets.zero,
             child: dayWidget,
           );
         }
