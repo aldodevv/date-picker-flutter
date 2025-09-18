@@ -296,6 +296,12 @@ class _DatePickerQtokenState extends State<DatePickerQtoken> {
       color: ColorsApp.dark30.withAlpha(30),
     );
 
+    final styleDisabledWeekendCells = widget.disabledCellsTextStyle?.copyWith(
+      fontWeight: FontWeight.w400,
+      fontSize: 16.0,
+      color: ColorsApp.darkRed60.withAlpha(80),
+    );
+
     final styleCurrentDateDecoration = widget.currentDateDecoration?.copyWith(
       borderRadius: const BorderRadius.all(Radius.circular(6)),
       border: BoxBorder.all(color: ColorsApp.brown50, width: 1),
@@ -368,6 +374,7 @@ class _DatePickerQtokenState extends State<DatePickerQtoken> {
             nextPageSemanticLabel: widget.nextPageSemanticLabel,
             disabledDayPredicate: widget.disabledDayPredicate,
             weekendTextStyle: styleWeekend,
+            disabledWeekendTextStyle: styleDisabledWeekendCells,
             onLeadingDateTap: () {
               setState(() {
                 _pickerType = PickerType.months;
