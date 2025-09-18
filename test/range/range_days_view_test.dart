@@ -1,4 +1,5 @@
 import 'package:date_picker_plus/src/range/range_days_view.dart';
+import 'package:date_picker_plus/src/style/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart' as intl;
@@ -16,6 +17,8 @@ void main() {
           home: Material(
             child: RangeDaysView(
               currentDate: currentDate,
+              selectedRangeColor: ColorsApp.brown10,
+              dateContainerSize: 40,
               minDate: DateTime(
                   currentDate.year - 2, currentDate.month, currentDate.day),
               maxDate: DateTime(
@@ -77,6 +80,8 @@ void main() {
           home: Material(
             child: RangeDaysView(
               currentDate: currentDate,
+              selectedRangeColor: ColorsApp.brown10,
+              dateContainerSize: 40,
               minDate: min,
               maxDate: max,
               displayedMonth: currentDate,
@@ -128,6 +133,8 @@ void main() {
           home: Material(
             child: RangeDaysView(
               currentDate: currentDate,
+              selectedRangeColor: ColorsApp.brown10,
+              dateContainerSize: 40,
               minDate: DateTime(
                   currentDate.year - 2, currentDate.month, currentDate.day),
               maxDate: DateTime(
@@ -182,6 +189,8 @@ void main() {
           home: Material(
             child: RangeDaysView(
               currentDate: currentDate,
+              selectedRangeColor: ColorsApp.brown10,
+              dateContainerSize: 40,
               minDate: DateTime(
                   currentDate.year - 2, currentDate.month, currentDate.day),
               maxDate: DateTime(
@@ -236,6 +245,8 @@ void main() {
           home: Material(
             child: RangeDaysView(
               currentDate: currentDate,
+              selectedRangeColor: ColorsApp.brown10,
+              dateContainerSize: 40,
               minDate: DateTime(
                   currentDate.year - 2, currentDate.month, currentDate.day),
               maxDate: DateTime(
@@ -302,6 +313,8 @@ void main() {
         MaterialApp(
           home: Material(
             child: RangeDaysView(
+              selectedRangeColor: ColorsApp.brown10,
+              dateContainerSize: 40,
               minDate: DateTime(
                 currentDate.year - 2,
                 currentDate.month,
@@ -395,6 +408,8 @@ void main() {
           MaterialApp(
             home: Material(
               child: RangeDaysView(
+                selectedRangeColor: ColorsApp.brown10,
+                dateContainerSize: 40,
                 minDate: min,
                 maxDate: max,
                 currentDate: currentDate,
@@ -438,6 +453,8 @@ void main() {
           MaterialApp(
             home: Material(
               child: RangeDaysView(
+                selectedRangeColor: ColorsApp.brown10,
+                dateContainerSize: 40,
                 minDate: min,
                 maxDate: max,
                 currentDate: currentDate,
@@ -477,6 +494,8 @@ void main() {
         MaterialApp(
           home: Material(
             child: RangeDaysView(
+              selectedRangeColor: ColorsApp.brown10,
+              dateContainerSize: 40,
               minDate: minDate,
               maxDate: maxDate,
               currentDate: currentDate,
@@ -553,6 +572,8 @@ void main() {
         MaterialApp(
           home: Material(
             child: RangeDaysView(
+              selectedRangeColor: ColorsApp.brown10,
+              dateContainerSize: 40,
               minDate: minDate,
               maxDate: maxDate,
               currentDate: currentDate,
@@ -651,6 +672,8 @@ void main() {
             child: Builder(builder: (context) {
               localizations = MaterialLocalizations.of(context);
               return RangeDaysView(
+                selectedRangeColor: ColorsApp.brown10,
+                dateContainerSize: 40,
                 minDate: minDate,
                 maxDate: maxDate,
                 currentDate: currentDate,
@@ -711,6 +734,8 @@ void main() {
         MaterialApp(
           home: Material(
             child: RangeDaysView(
+              selectedRangeColor: ColorsApp.brown10,
+              dateContainerSize: 40,
               minDate: minDate,
               maxDate: maxDate,
               currentDate: currentDate,
@@ -768,6 +793,8 @@ void main() {
         MaterialApp(
           home: Material(
             child: RangeDaysView(
+              selectedRangeColor: ColorsApp.brown10,
+              dateContainerSize: 40,
               minDate: minDate,
               maxDate: maxDate,
               currentDate: currentDate,
@@ -823,6 +850,8 @@ void main() {
       Widget widget(DateTime? startDate, DateTime? endDate) => MaterialApp(
             home: Material(
               child: RangeDaysView(
+                selectedRangeColor: ColorsApp.brown10,
+                dateContainerSize: 40,
                 minDate: DateTime(2019, 1, 1),
                 maxDate: DateTime(2021, 1, 1),
                 currentDate: DateTime(2020, 1, 31),

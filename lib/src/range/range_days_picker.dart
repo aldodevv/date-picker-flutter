@@ -45,6 +45,9 @@ class RangeDaysPicker extends StatefulWidget {
     this.endDateDecoration,
     this.currentDateContainerDecoration,
     this.enabledCellsContainerDecoration,
+    this.isWithDivider = false,
+    this.selectedRangeColor = ColorsApp.blue10,
+    this.dateContainerSize = 40,
   }) {
     assert(!minDate.isAfter(maxDate), "minDate can't be after maxDate");
 
@@ -237,6 +240,12 @@ class RangeDaysPicker extends StatefulWidget {
 
   /// The decoration for enabled cells container.
   final BoxDecoration? enabledCellsContainerDecoration;
+
+  final bool isWithDivider;
+
+  final Color selectedRangeColor;
+
+  final double dateContainerSize;
 
   @override
   State<RangeDaysPicker> createState() => __RangeDaysPickerState();
@@ -460,13 +469,15 @@ class __RangeDaysPickerState extends State<RangeDaysPicker> {
                 );
               },
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, top: 4.0, right: 8.0),
-              child: Divider(
-                height: 1,
-                color: ColorsApp.dark30.withAlpha(40),
-              ),
-            ),
+            widget.isWithDivider
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+                    child: Divider(
+                      height: 1,
+                      color: ColorsApp.dark30.withAlpha(40),
+                    ),
+                  )
+                : const SizedBox(height: 10),
             Expanded(
               child: PageView.builder(
                 scrollDirection: Axis.horizontal,
@@ -488,6 +499,8 @@ class __RangeDaysPickerState extends State<RangeDaysPicker> {
 
                   return RangeDaysView(
                     key: ValueKey<DateTime>(month),
+                    selectedRangeColor: widget.selectedRangeColor,
+                    dateContainerSize: widget.dateContainerSize,
                     currentDate: DateUtils.dateOnly(
                         widget.currentDate ?? DateTime.now()),
                     minDate: DateUtils.dateOnly(widget.minDate),
@@ -500,6 +513,8 @@ class __RangeDaysPickerState extends State<RangeDaysPicker> {
                         ? null
                         : DateUtils.dateOnly(widget.selectedStartDate!),
                     daysOfTheWeekTextStyle: daysOfTheWeekTextStyle,
+                    startDateDecoration: widget.startDateDecoration,
+                    endDateDecoration: widget.endDateDecoration,
                     enabledCellsTextStyle: enabledCellsTextStyle,
                     enabledCellsDecoration: enabledCellsDecoration,
                     disabledCellsTextStyle: disabledCellsTextStyle,
@@ -513,14 +528,8 @@ class __RangeDaysPickerState extends State<RangeDaysPicker> {
                     highlightColor: highlightColor,
                     splashColor: splashColor,
                     splashRadius: widget.splashRadius,
-                    weekendTextStyle: widget.weekendTextStyle,
                     disabledWeekendTextStyle: widget.disabledWeekendTextStyle,
-                    startDateDecoration: widget.startDateDecoration,
-                    endDateDecoration: widget.endDateDecoration,
-                    currentDateContainerDecoration:
-                        widget.currentDateContainerDecoration,
-                    enabledCellsContainerDecoration:
-                        widget.enabledCellsContainerDecoration,
+                    weekendTextStyle: widget.weekendTextStyle,
                     onEndDateChanged: (value) =>
                         widget.onEndDateChanged?.call(value),
                     onStartDateChanged: (value) =>

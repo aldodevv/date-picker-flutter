@@ -273,7 +273,7 @@ class DaysView extends StatelessWidget {
 
         if (isSelectedDay || isCurrent) {
           dayWidget = Padding(
-            padding: const EdgeInsets.all(6.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             child: dayWidget,
           );
         }

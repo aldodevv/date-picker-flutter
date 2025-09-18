@@ -332,7 +332,7 @@ class _DatePickerQtokenState extends State<DatePickerQtoken> {
     );
 
     final styleCurrentDate = widget.currentDateTextStyle?.copyWith(
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w700,
       fontSize: 16.0,
       color: ColorsApp.dark80,
     );
@@ -343,11 +343,30 @@ class _DatePickerQtokenState extends State<DatePickerQtoken> {
       color: ColorsApp.darkRed60,
     );
 
+    final dayViewCurrentDateTextStyle = widget.currentDateTextStyle?.copyWith(
+      fontWeight: FontWeight.w700,
+      fontSize: 16.0,
+      color: ColorsApp.dark80,
+    );
+
+    final monthViewCurrentDateTextStyle = widget.currentDateTextStyle?.copyWith(
+      fontWeight: FontWeight.w700,
+      fontSize: 16.0,
+      color: ColorsApp.dark80,
+    );
+
+    final yearViewCurrentDateTextStyle = widget.currentDateTextStyle?.copyWith(
+      fontWeight: FontWeight.w700,
+      fontSize: 16.0,
+      color: ColorsApp.dark80,
+    );
+
     switch (_pickerType!) {
       case PickerType.days:
         return Padding(
           padding: widget.padding,
           child: DaysPicker(
+            isWithDivider: true,
             centerLeadingDate: widget.centerLeadingDate,
             initialDate: _displayedDate,
             selectedDate: _selectedDate,
@@ -361,7 +380,7 @@ class _DatePickerQtokenState extends State<DatePickerQtoken> {
             disabledCellsTextStyle: styleDisabledCells,
             disabledCellsDecoration: widget.disabledCellsDecoration,
             currentDateDecoration: styleCurrentDateDecoration,
-            currentDateTextStyle: widget.currentDateTextStyle,
+            currentDateTextStyle: dayViewCurrentDateTextStyle,
             selectedCellDecoration: styleSelectedCellDecoration,
             selectedCellTextStyle: styleSelectedCell,
             slidersColor: widget.slidersColor,
@@ -395,6 +414,7 @@ class _DatePickerQtokenState extends State<DatePickerQtoken> {
           child: Padding(
             padding: widget.padding,
             child: MonthPicker(
+              isWithDivider: true,
               centerLeadingDate: widget.centerLeadingDate,
               initialDate: _displayedDate,
               selectedDate: _selectedDate,
@@ -403,7 +423,7 @@ class _DatePickerQtokenState extends State<DatePickerQtoken> {
               maxDate: DateUtils.dateOnly(widget.maxDate),
               minDate: DateUtils.dateOnly(widget.minDate),
               currentDateDecoration: styleCurrentDateDecoration,
-              currentDateTextStyle: widget.currentDateTextStyle,
+              currentDateTextStyle: monthViewCurrentDateTextStyle,
               disabledCellsDecoration: widget.disabledCellsDecoration,
               disabledCellsTextStyle: styleDisabledCells,
               enabledCellsDecoration: widget.enabledCellsDecoration,
@@ -442,6 +462,7 @@ class _DatePickerQtokenState extends State<DatePickerQtoken> {
         return Padding(
           padding: widget.padding,
           child: YearsPicker(
+            isWithDivider: true,
             centerLeadingDate: widget.centerLeadingDate,
             initialDate: _displayedDate,
             selectedDate: _selectedDate,
@@ -450,7 +471,7 @@ class _DatePickerQtokenState extends State<DatePickerQtoken> {
             maxDate: DateUtils.dateOnly(widget.maxDate),
             minDate: DateUtils.dateOnly(widget.minDate),
             currentDateDecoration: styleCurrentDateDecoration,
-            currentDateTextStyle: styleCurrentDate,
+            currentDateTextStyle: yearViewCurrentDateTextStyle,
             disabledCellsDecoration: widget.disabledCellsDecoration,
             disabledCellsTextStyle: styleDisabledCells,
             enabledCellsDecoration: widget.enabledCellsDecoration,

@@ -370,6 +370,13 @@ class _RangeDatePickerQibState extends State<RangeDatePickerQib> {
       color: ColorsApp.red80,
     );
 
+
+    final styleDisabledWeekendCells = widget.disabledCellsTextStyle?.copyWith(
+      fontWeight: FontWeight.w400,
+      fontSize: 16.0,
+      color: ColorsApp.darkRed60.withAlpha(80),
+    );
+
     final styleCurrentDate = widget.currentDateTextStyle?.copyWith(
       fontWeight: FontWeight.bold,
       fontSize: 16.0,
@@ -392,6 +399,7 @@ class _RangeDatePickerQibState extends State<RangeDatePickerQib> {
         return Padding(
           padding: widget.padding,
           child: RangeDaysPicker(
+            isWithDivider: false,
             centerLeadingDate: widget.centerLeadingDate,
             currentDate:
                 DateUtils.dateOnly(widget.currentDate ?? DateTime.now()),
@@ -420,6 +428,7 @@ class _RangeDatePickerQibState extends State<RangeDatePickerQib> {
             previousPageSemanticLabel: widget.previousPageSemanticLabel,
             nextPageSemanticLabel: widget.nextPageSemanticLabel,
             weekendTextStyle: styleWeekend,
+            disabledWeekendTextStyle: styleDisabledWeekendCells,
             onLeadingDateTap: () {
               setState(() {
                 _pickerType = PickerType.months;
@@ -458,6 +467,7 @@ class _RangeDatePickerQibState extends State<RangeDatePickerQib> {
         return Padding(
           padding: widget.padding,
           child: MonthPicker(
+            isWithDivider: false,
             centerLeadingDate: widget.centerLeadingDate,
             initialDate: _diplayedDate,
             selectedDate: _monthPickerSelection,
@@ -505,6 +515,7 @@ class _RangeDatePickerQibState extends State<RangeDatePickerQib> {
         return Padding(
           padding: widget.padding,
           child: YearsPicker(
+            isWithDivider: false,
             centerLeadingDate: widget.centerLeadingDate,
             selectedDate: _yearPickerSelection,
             initialDate: _diplayedDate,

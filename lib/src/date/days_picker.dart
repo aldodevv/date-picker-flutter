@@ -76,6 +76,7 @@ class DaysPicker extends StatefulWidget {
       this.nextPageSemanticLabel = 'Next Day',
       this.disabledDayPredicate,
       this.weekendTextStyle,
+      this.isWithDivider = false,
       this.disabledWeekendTextStyle}) {
     assert(!minDate.isAfter(maxDate), "minDate can't be after maxDate");
     assert(
@@ -246,6 +247,8 @@ class DaysPicker extends StatefulWidget {
 
   /// The text style for disabled weekend cells.
   final TextStyle? disabledWeekendTextStyle;
+
+  final bool isWithDivider;
 
   @override
   State<DaysPicker> createState() => _DaysPickerState();
@@ -461,14 +464,15 @@ class _DaysPickerState extends State<DaysPicker> {
               previousPageSemanticLabel: widget.previousPageSemanticLabel,
               nextPageSemanticLabel: widget.nextPageSemanticLabel,
             ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-              child: Divider(
-                height: 1,
-                color: ColorsApp.dark30.withAlpha(40),
-              ),
-            ),
+            widget.isWithDivider
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+                    child: Divider(
+                      height: 1,
+                      color: ColorsApp.dark30.withAlpha(40),
+                    ),
+                  )
+                : const SizedBox(height: 10),
             Expanded(
               child: PageView.builder(
                 scrollDirection: Axis.horizontal,

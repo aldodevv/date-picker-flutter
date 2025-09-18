@@ -352,6 +352,7 @@ class _RangeDatePickerQtokenState extends State<RangeDatePickerQtoken> {
     final styleCurrentDateDecoration = widget.currentDateDecoration?.copyWith(
       color: ColorsApp.brown10,
       borderRadius: const BorderRadius.all(Radius.circular(6)),
+      shape: BoxShape.rectangle,
       border: BoxBorder.all(color: ColorsApp.brown50, width: 1),
     );
 
@@ -373,7 +374,7 @@ class _RangeDatePickerQtokenState extends State<RangeDatePickerQtoken> {
 
     final styleLeadingYear = widget.leadingDateTextStyle?.copyWith(
       fontSize: 18.0,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w400,
       color: ColorsApp.dark80,
     );
 
@@ -407,16 +408,21 @@ class _RangeDatePickerQtokenState extends State<RangeDatePickerQtoken> {
       fontSize: 16.0,
     );
 
-    final monthViewDateDecoration = widget.currentDateDecoration?.copyWith(
-      color: ColorsApp.brown10,
+    final monthViewCurrentDateDecoration = widget.currentDateDecoration?.copyWith(
       borderRadius: const BorderRadius.all(Radius.circular(6)),
       border: BoxBorder.all(color: ColorsApp.brown50, width: 1),
     );
 
     final monthViewSelectedCellTextStyle =
-        widget.singleSelectedCellTextStyle?.copyWith(color: Colors.white);
+        widget.singleSelectedCellTextStyle
+        ?.copyWith(color: ColorsApp.dark80, fontWeight: FontWeight.w600);
+
     final monthViewSelectedCellDecoration =
-        widget.singleSelectedCellDecoration?.copyWith(color: ColorsApp.brown50);
+        widget.singleSelectedCellDecoration?.copyWith(
+      color: ColorsApp.brown10,
+      border: BoxBorder.all(color: ColorsApp.brown50, width: 1),
+      borderRadius: const BorderRadius.all(Radius.circular(6)),
+    );
 
     final monthViewDisabledCellsTextStyle =
         widget.disabledCellsTextStyle?.copyWith(
@@ -430,16 +436,20 @@ class _RangeDatePickerQtokenState extends State<RangeDatePickerQtoken> {
 
     final yearViewCurrentDateDecoration =
         widget.currentDateDecoration?.copyWith(
-      color: ColorsApp.brown10,
       borderRadius: const BorderRadius.all(Radius.circular(6)),
       border: BoxBorder.all(color: ColorsApp.brown50, width: 1),
     );
 
     final yearViewSelectedCellTextStyle =
-        widget.singleSelectedCellTextStyle?.copyWith(color: Colors.white);
+        widget.singleSelectedCellTextStyle
+        ?.copyWith(color: ColorsApp.dark80, fontWeight: FontWeight.w600);
 
     final yearViewSelectedCellDecoration =
-        widget.singleSelectedCellDecoration?.copyWith(color: ColorsApp.brown50);
+        widget.singleSelectedCellDecoration?.copyWith(
+      color: ColorsApp.brown10,
+      border: BoxBorder.all(color: ColorsApp.brown50, width: 1),
+      borderRadius: const BorderRadius.all(Radius.circular(6)),
+    );
 
     final yearViewDisabledCellsTextStyle =
         widget.disabledCellsTextStyle?.copyWith(
@@ -458,11 +468,6 @@ class _RangeDatePickerQtokenState extends State<RangeDatePickerQtoken> {
       borderRadius: BorderRadius.circular(6.0),
     );
 
-    final currentDateContainerDecoration = BoxDecoration(
-      color: ColorsApp.brown10,
-      borderRadius: BorderRadius.circular(6.0),
-    );
-
     final enabledCellsContainerDecoration = BoxDecoration(
       borderRadius: BorderRadius.circular(6.0),
     );
@@ -472,6 +477,8 @@ class _RangeDatePickerQtokenState extends State<RangeDatePickerQtoken> {
         return Padding(
           padding: widget.padding,
           child: RangeDaysPicker(
+            isWithDivider: true,
+            selectedRangeColor: ColorsApp.brown10.withAlpha(80),
             centerLeadingDate: widget.centerLeadingDate,
             currentDate:
                 DateUtils.dateOnly(widget.currentDate ?? DateTime.now()),
@@ -503,7 +510,7 @@ class _RangeDatePickerQtokenState extends State<RangeDatePickerQtoken> {
             disabledWeekendTextStyle: styleDisabledWeekendCells,
             startDateDecoration: startDateContainerDecoration,
             endDateDecoration: endDateContainerDecoration,
-            currentDateContainerDecoration: currentDateContainerDecoration,
+            currentDateContainerDecoration: styleCurrentDateDecoration,
             enabledCellsContainerDecoration: enabledCellsContainerDecoration,
             onLeadingDateTap: () {
               setState(() {
@@ -551,7 +558,7 @@ class _RangeDatePickerQtokenState extends State<RangeDatePickerQtoken> {
             minDate: DateUtils.dateOnly(widget.minDate),
             currentDate:
                 DateUtils.dateOnly(widget.currentDate ?? DateTime.now()),
-            currentDateDecoration: monthViewDateDecoration,
+            currentDateDecoration: monthViewCurrentDateDecoration,
             currentDateTextStyle: monthViewCurrentDateTextStyle,
             disabledCellsDecoration: widget.disabledCellsDecoration,
             disabledCellsTextStyle: monthViewDisabledCellsTextStyle,

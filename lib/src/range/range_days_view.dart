@@ -1,5 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
+import 'package:date_picker_plus/src/style/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart' show DateFormat;
@@ -39,13 +40,15 @@ class RangeDaysView extends StatelessWidget {
       required this.highlightColor,
       required this.splashColor,
       required this.splashRadius,
+    required this.selectedRangeColor,
+    required this.dateContainerSize,
       this.weekendTextStyle,
       this.disabledWeekendTextStyle,
       this.startDateDecoration,
       this.endDateDecoration,
       this.currentDateContainerDecoration,
       this.enabledCellsContainerDecoration,
-      this.isQtokenRangePicker = false}) {
+  }) {
     assert(!minDate.isAfter(maxDate), "minDate can't be after maxDate");
 
     assert(() {
@@ -181,7 +184,10 @@ class RangeDaysView extends StatelessWidget {
   /// The decoration for enabled cells container.
   final BoxDecoration? enabledCellsContainerDecoration;
 
-  final bool isQtokenRangePicker;
+  final Color selectedRangeColor;
+
+  final double dateContainerSize;
+
 
   /// Builds widgets showing abbreviated days of week. The first widget in the
   /// returned list corresponds to the first day of week for the current locale.
@@ -340,62 +346,145 @@ class RangeDaysView extends StatelessWidget {
           style = disabledCellsTextStyle;
           decoration = currentDateDecoration;
         }
-
-        EdgeInsets getDayPadding() {
-          if (isSingleCellSelected || isCurrent) {
-            return const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0);
-          } else if (isStartDate) {
-            return const EdgeInsets.fromLTRB(6.0, 2.0, 0.0, 2.0);
-          } else if (isEndDate) {
-            return const EdgeInsets.fromLTRB(0.0, 2.0, 6.0, 2.0);
-          }
-          return const EdgeInsets.symmetric(vertical: 2.0);
+        
+        if (isStartDate || isEndDate || isSingleCellSelected) {
+          style = singleSelectedCellTextStyle.copyWith(color: Colors.white);
+        } else if (isCurrent) {
+          style = currentDateTextStyle;
+        } else if (isDisabled) {
+          style = isWeekend
+              ? (disabledWeekendTextStyle ?? disabledCellsTextStyle)
+              : disabledCellsTextStyle;
+        } else {
+          style = isWeekend ? (weekendTextStyle ?? enabledCellsTextStyle) : enabledCellsTextStyle;
         }
 
-        Widget dayWidget = Container(
-          width: 32.0,
-          height: 32.0,
-          decoration: isStartDate || isEndDate
-              ? (isStartDate ? startDateDecoration : endDateDecoration)
-              : isCurrent
-                  ? currentDateContainerDecoration
-                  : enabledCellsContainerDecoration,
-          child: Center(
-            child: Text(localizations.formatDecimal(day), style: style),
+        final Widget dayText = Text(
+          localizations.formatDecimal(day),
+          style: style,
+        );
+
+        final bool isSingleSelected = selectedStartDate != null && selectedEndDate == null;
+
+        final Color rangeColor = isSingleSelected ? Colors.transparent : selectedRangeColor;
+
+        final Color circleColor =
+            startDateDecoration?.color ?? endDateDecoration?.color ?? Colors.blue;
+
+        Widget content;
+        if (isStartDate) {
+          content = Stack(
+            children: [
+              CustomPaint(
+                painter: _DecorationPainter(
+                  textDirection: Directionality.of(context),
+                  color: rangeColor,
+                  start: true,
+                ),
+                child: const SizedBox.expand(),
+              ),
+              Center(
+                child: Container(
+                  width: dateContainerSize,
+                  height: dateContainerSize,
+                  alignment: Alignment.center,
+                  decoration: startDateDecoration ??
+                      BoxDecoration(color: circleColor, shape: BoxShape.circle),
+                  child: dayText,
+                ),
+              ),
+            ],
+          );
+        } else if (isEndDate) {
+          content = Stack(
+            children: [
+              CustomPaint(
+                painter: _DecorationPainter(
+                  textDirection: Directionality.of(context),
+                  color: rangeColor,
+                  start: false,
+                ),
+                child: const SizedBox.expand(),
+              ),
+              Center(
+                child: Container(
+                  width: dateContainerSize,
+                  height: dateContainerSize,
+                  alignment: Alignment.center,
+                  decoration: endDateDecoration ??
+                      BoxDecoration(color: circleColor, shape: BoxShape.circle),
+                  child: dayText,
+                ),
+              ),
+            ],
+          );
+        } else if (isWithinRange) {
+          content = Container(
+            width: dateContainerSize,
+            height: dateContainerSize,
+            alignment: Alignment.center,
+            decoration: enabledCellsContainerDecoration?.copyWith(
+                  color: rangeColor,
+                ) ??
+                BoxDecoration(color: rangeColor),
+            child: dayText,
+          );
+        } else if (isCurrent) {
+          content = Center(
+            child: Container(
+              width: dateContainerSize,
+              height: dateContainerSize,
+              alignment: Alignment.center,
+              decoration: currentDateDecoration,
+              child: dayText,
+            ),
+          );
+        } else {
+          content = Center(child: dayText);
+        }
+
+        Widget dayWidget = SizedBox(
+          width: dateContainerSize,
+          height: dateContainerSize,
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(dateContainerSize / 2),
+              highlightColor: Colors.transparent,
+              splashColor: splashColor,
+              onTap: isDisabled
+                  ? null
+                  : () {
+                      final isStart = (selectedEndDate == null && selectedStartDate == null) ||
+                          (selectedEndDate != null && selectedStartDate != null);
+
+                      if (isStart) {
+                        onStartDateChanged(dayToBuild);
+                        return;
+                      }
+
+                      if (dayToBuild.isBefore(selectedStartDate!)) {
+                        onStartDateChanged(dayToBuild);
+                        onEndDateChanged(selectedStartDate!);
+                        return;
+                      }
+
+                      onEndDateChanged(dayToBuild);
+                    },
+              child: content,
+            ),
           ),
         );
 
-        dayWidget = Container(
-          height: 32.0,
-          width: 32.0,
-          clipBehavior: Clip.hardEdge,
-          decoration: decoration,
-          child: dayWidget,
-        );
 
-        // Add padding for selected cells like in daysPicker
+
         if (isSingleCellSelected ||
             isStartDate ||
             isEndDate ||
             isCurrent ||
             isRangeSelected) {
-          dayWidget = Padding(
-            padding: isQtokenRangePicker ? getDayPadding() : EdgeInsets.zero,
-            child: dayWidget,
-          );
+          dayWidget = dayWidget;
         }
-
-        //! disable for background color range picker
-        // if ((isStartDate || isEndDate) && isRangeSelected) {
-        //   dayWidget = CustomPaint(
-        //     painter: _DecorationPainter(
-        //       textDirection: Directionality.of(context),
-        //       color: selectedCellsDecoration.color,
-        //       start: isStartDate,
-        //     ),
-        //     child: dayWidget,
-        //   );
-        // }
 
         if (isDisabled) {
           dayWidget = ExcludeSemantics(

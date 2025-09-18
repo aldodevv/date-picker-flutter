@@ -296,6 +296,12 @@ class _DatePickerQibState extends State<DatePickerQib> {
       color: ColorsApp.light50,
     );
 
+    final styleDisabledWeekendCells = widget.disabledCellsTextStyle?.copyWith(
+      fontWeight: FontWeight.w400,
+      fontSize: 16.0,
+      color: ColorsApp.darkRed60.withAlpha(80),
+    );
+
     final styleCurrentDateDecoration = widget.currentDateDecoration?.copyWith(
       border: BoxBorder.all(color: ColorsApp.blue80),
     );
@@ -334,6 +340,7 @@ class _DatePickerQibState extends State<DatePickerQib> {
         return Padding(
           padding: widget.padding,
           child: DaysPicker(
+            isWithDivider: false,
             centerLeadingDate: widget.centerLeadingDate,
             initialDate: _displayedDate,
             selectedDate: _selectedDate,
@@ -341,6 +348,7 @@ class _DatePickerQibState extends State<DatePickerQib> {
                 DateUtils.dateOnly(widget.currentDate ?? DateTime.now()),
             maxDate: DateUtils.dateOnly(widget.maxDate),
             minDate: DateUtils.dateOnly(widget.minDate),
+            disabledWeekendTextStyle: styleDisabledWeekendCells,
             daysOfTheWeekTextStyle: styleDaysOfTheWeek,
             enabledCellsTextStyle: styleEnabledCells,
             enabledCellsDecoration: widget.enabledCellsDecoration,
@@ -378,6 +386,7 @@ class _DatePickerQibState extends State<DatePickerQib> {
         return Padding(
           padding: widget.padding,
           child: MonthPicker(
+            isWithDivider: false,
             centerLeadingDate: widget.centerLeadingDate,
             initialDate: _displayedDate,
             selectedDate: _selectedDate,
@@ -424,6 +433,7 @@ class _DatePickerQibState extends State<DatePickerQib> {
         return Padding(
           padding: widget.padding,
           child: YearsPicker(
+            isWithDivider: false,
             centerLeadingDate: widget.centerLeadingDate,
             initialDate: _displayedDate,
             selectedDate: _selectedDate,
